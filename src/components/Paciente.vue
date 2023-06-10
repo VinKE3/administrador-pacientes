@@ -1,4 +1,5 @@
 <script setup>
+defineEmits(["actualizar-paciente"]);
 defineProps({
   paciente: {
     type: Object,
@@ -11,7 +12,9 @@ defineProps({
   <div class="mx-5 my-10 bg-secondary-200 shadow-md px-5 py-10 rounded-xl">
     <p class="font-bold mb-3 uppercase text-white">
       ID :
-      <span class="font-normal normal-case text-primary"> </span>
+      <span class="font-normal normal-case text-primary"
+        >{{ paciente.id }}
+      </span>
     </p>
 
     <p class="font-bold mb-3 uppercase text-white">
@@ -52,6 +55,7 @@ defineProps({
     <div class="grid md:grid-cols-2 gap-5 mt-10">
       <button
         type="button"
+        @click="$emit('actualizar-paciente', paciente.id)"
         class="block w-full py-2 px-10 bg-secondary-100 text-white hover:text-primary font-bold uppercase rounded-lg"
       >
         Editar

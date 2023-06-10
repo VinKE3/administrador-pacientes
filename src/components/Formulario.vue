@@ -46,6 +46,11 @@ const validarRegistro = () => {
     return;
   }
   emit("guardar-paciente");
+  alerta.mensaje = "Paciente agregado correctamente";
+  alerta.tipo = "exito";
+  setTimeout(() => {
+    Object.assign(alerta, { mensaje: "", tipo: "" });
+  }, 3000);
 };
 </script>
 
@@ -69,6 +74,7 @@ const validarRegistro = () => {
           id="paciente"
           type="text"
           placeholder="Nombre Paciente"
+          :value="nombre"
           @input="$emit('update:nombre', $event.target.value)"
           class="border-2 w-full mt-2 py-3 px-3 rounded-lg bg-secondary-200 focus:outline-none focus:border-primary"
         />
@@ -82,6 +88,7 @@ const validarRegistro = () => {
           type="text"
           maxlength="8"
           placeholder="N° D.N.I"
+          :value="documento"
           @input="$emit('update:documento', $event.target.value)"
           class="border-2 w-full mt-2 py-3 px-3 rounded-lg bg-secondary-200 focus:outline-none focus:border-primary"
         />
@@ -94,6 +101,7 @@ const validarRegistro = () => {
           id="email"
           type="email"
           placeholder="Correo Electrónico"
+          :value="email"
           @input="$emit('update:email', $event.target.value)"
           class="border-2 w-full mt-2 py-3 px-3 rounded-lg bg-secondary-200 focus:outline-none focus:border-primary"
         />
@@ -105,6 +113,7 @@ const validarRegistro = () => {
         <input
           id="fecha"
           type="date"
+          :value="fecha"
           @input="$emit('update:fecha', $event.target.value)"
           class="border-2 w-full mt-2 py-3 px-3 rounded-lg bg-secondary-100 focus:outline-none focus:border-primary"
         />
@@ -116,6 +125,7 @@ const validarRegistro = () => {
         <textarea
           class="border-2 w-full mt-2 py-3 px-3 rounded-lg bg-secondary-200 focus:outline-none focus:border-primary"
           name="sintomas"
+          :value="sintomas"
           @input="$emit('update:sintomas', $event.target.value)"
           placeholder="Describir Sintomas"
           id="sintomas"
