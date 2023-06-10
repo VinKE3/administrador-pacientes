@@ -1,5 +1,6 @@
 <script setup>
 import { ref, reactive } from "vue";
+import { uid } from "uid";
 import Header from "./components/Header.vue";
 import Formulario from "./components/Formulario.vue";
 import Paciente from "./components/Paciente.vue";
@@ -7,6 +8,7 @@ import Paciente from "./components/Paciente.vue";
 const pacientes = ref([]);
 
 const paciente = reactive({
+  id: null,
   nombre: "",
   documento: "",
   email: "",
@@ -17,9 +19,22 @@ const paciente = reactive({
 const guardarPaciente = () => {
   pacientes.value.push({
     ...paciente,
+    id: uid(),
   });
+  Object.assign(paciente, {
+    nombre: "",
+    documento: "",
+    email: "",
+    fecha: "",
+    sintomas: "",
+  });
+};
 
-  Object.keys(paciente).forEach((key) => (paciente[key] = ""));
+const actualizarPaciente = (id) => {
+  const pacienteEditar = pacientes.value.filter(
+    (paciente) => paciente.id === id
+  )[0];
+  Object.assign(paciente, pacienteEditar);
 };
 </script>
 
@@ -44,7 +59,12 @@ const guardarPaciente = () => {
             Información de tus
             <span class="text-primary font-bold">Pacientes</span>
           </p>
-          <Paciente v-for="paciente in pacientes" :paciente="paciente" />
+          <Paciente
+            v-for="paciente in pacientes"
+            :paciente="paciente"
+            :key="paciente.id"
+            @actualizar-paciente="actualizarPaciente"
+          />
         </div>
         <p
           v-else
